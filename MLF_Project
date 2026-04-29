@@ -5,7 +5,7 @@
     "colab": {
       "provenance": [],
       "gpuType": "A100",
-      "authorship_tag": "ABX9TyOUTF73e0P2tJul5TcPpqK1",
+      "authorship_tag": "ABX9TyN646zj6TO7Z1MCkhgIk33x",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -3269,6 +3269,122 @@
             ],
             "application/javascript": [
               "download(\"download_fe8fe5a7-c9ac-4657-9b25-83878d2260f2\", \"submission.csv\", 30877)"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import nbformat\n",
+        "\n",
+        "notebook_path = \"/content/Untitled19 (2).ipynb\"  # замени на точное имя из !ls\n",
+        "\n",
+        "nb = nbformat.read(notebook_path, as_version=4)\n",
+        "\n",
+        "if \"widgets\" in nb[\"metadata\"]:\n",
+        "    del nb[\"metadata\"][\"widgets\"]\n",
+        "\n",
+        "nbformat.write(nb, \"/content/fixed_notebook.ipynb\")\n",
+        "\n",
+        "print(\"Done!\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9oyBqC1ySw47",
+        "outputId": "009bc347-8093-43e5-cc65-ac67604d1542"
+      },
+      "execution_count": 32,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Done!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import files\n",
+        "files.download(\"/content/fixed_notebook.ipynb\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 17
+        },
+        "id": "n-MkXIouTqTI",
+        "outputId": "fd8bc1e0-7d5a-4d77-b9b2-9fbe50a3a805"
+      },
+      "execution_count": 33,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Javascript object>"
+            ],
+            "application/javascript": [
+              "\n",
+              "    async function download(id, filename, size) {\n",
+              "      if (!google.colab.kernel.accessAllowed) {\n",
+              "        return;\n",
+              "      }\n",
+              "      const div = document.createElement('div');\n",
+              "      const label = document.createElement('label');\n",
+              "      label.textContent = `Downloading \"${filename}\": `;\n",
+              "      div.appendChild(label);\n",
+              "      const progress = document.createElement('progress');\n",
+              "      progress.max = size;\n",
+              "      div.appendChild(progress);\n",
+              "      document.body.appendChild(div);\n",
+              "\n",
+              "      const buffers = [];\n",
+              "      let downloaded = 0;\n",
+              "\n",
+              "      const channel = await google.colab.kernel.comms.open(id);\n",
+              "      // Send a message to notify the kernel that we're ready.\n",
+              "      channel.send({})\n",
+              "\n",
+              "      for await (const message of channel.messages) {\n",
+              "        // Send a message to notify the kernel that we're ready.\n",
+              "        channel.send({})\n",
+              "        if (message.buffers) {\n",
+              "          for (const buffer of message.buffers) {\n",
+              "            buffers.push(buffer);\n",
+              "            downloaded += buffer.byteLength;\n",
+              "            progress.value = downloaded;\n",
+              "          }\n",
+              "        }\n",
+              "      }\n",
+              "      const blob = new Blob(buffers, {type: 'application/binary'});\n",
+              "      const a = document.createElement('a');\n",
+              "      a.href = window.URL.createObjectURL(blob);\n",
+              "      a.download = filename;\n",
+              "      div.appendChild(a);\n",
+              "      a.click();\n",
+              "      div.remove();\n",
+              "    }\n",
+              "  "
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Javascript object>"
+            ],
+            "application/javascript": [
+              "download(\"download_ad012eeb-f804-44a0-8275-33aaef4eb595\", \"fixed_notebook.ipynb\", 924030)"
             ]
           },
           "metadata": {}
